@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>视觉差滚动-base1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body {
+            height: 100%;
+        }
+        
+        .caption {
+            position: absolute;
+            top: calc(50% - 76px);
+            left: 0;
+            width: 100%;
+            text-align: center;
+            height: 76px;
+        }
+        
+        .part1 {
+            min-height: 100%;
+            background: url("images/img_parallax.jpg") no-repeat;
+            opacity: 0.8;
+        }
+        
+        .part1 span {
+            padding: 22px 34px;
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            cursor: pointer;
+            font-size: 23px;
+            text-align: center;
+            transition: all ease 0.4s;
+        }
+        
+        .part1 span:hover {
+            background: #fff;
+            color: #333;
+        }
+        
+        .part2 {
+            min-height: 100%;
+            background: url("images/img_parallax2.jpg") no-repeat;
+            opacity: 0.6;
+        }
+        
+        .part3 {
+            min-height: 100%;
+            background: url("images/img_parallax3.jpg") no-repeat;
+            opacity: 0.6;
+        }
+        
+        .parallax p {
+            text-align: center;
+            line-height: 40vh;
+            font-size: 40px;
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+        
+        .text {
+            min-height: 40vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 0 40px;
+            line-height: 2.2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="part1 parallax">
+        <div class="caption">
+            <span>Scroll Page</span>
+        </div>
+    </div>
+    <div class="text" style="background: skyblue;">
+        <h2>PARALLAX DEMO</h2>
+        <p>Parallax scrolling is a web site trend where the background content is moved at a different speed than the foreground content while scrolling. Nascetur per nec posuere turpis, lectus nec libero turpis nunc at, sed posuere mollis ullamcorper libero
+            ante lectus, blandit pellentesque a, magna turpis est sapien duis blandit dignissim. Viverra interdum mi magna mi, morbi sociis. Condimentum dui ipsum consequat morbi, curabitur aliquam pede, nullam vitae eu placerat eget et vehicula. Varius
+            quisque non molestie dolor, nunc nisl dapibus vestibulum at, sodales tincidunt mauris ullamcorper, dapibus pulvinar, in in neque risus odio. Accumsan fringilla vulputate at quibusdam sociis eleifend, aenean maecenas vulputate, non id vehicula
+            lorem mattis, ratione interdum sociis ornare. Suscipit proin magna cras vel, non sit platea sit, maecenas ante augue etiam maecenas, porta porttitor placerat leo.</p>
+    </div>
+    <div class="part2 parallax">
+        <div class="caption">
+            <p>我想装逼</p>
+        </div>
+    </div>
+    <div class="text" style="background:pink;">
+        <h2>PARALLAX DEMO2</h2>
+        <p>Parallax scrolling is a web site trend where the background content is moved at a different speed than the foreground content while scrolling. Nascetur per nec posuere turpis, lectus nec libero turpis nunc at, sed posuere mollis ullamcorper libero
+            ante lectus, blandit pellentesque a, magna turpis est sapien duis blandit dignissim. Viverra interdum mi magna mi, morbi sociis. Condimentum dui ipsum consequat morbi, curabitur aliquam pede, nullam vitae eu placerat eget et vehicula. Varius
+            quisque non molestie dolor, nunc nisl dapibus vestibulum at, sodales tincidunt mauris ullamcorper, dapibus pulvinar, in in neque risus odio. Accumsan fringilla vulputate at quibusdam sociis eleifend, aenean maecenas vulputate, non id vehicula
+            lorem mattis, ratione interdum sociis ornare. Suscipit proin magna cras vel, non sit platea sit, maecenas ante augue etiam maecenas, porta porttitor placerat leo.</p>
+    </div>
+    <div class="part3 parallax">
+        <div class="caption">
+            <p>没法装逼</p>
+        </div>
+    </div>
+    <div class="part1 parallax">
+        <p>不装逼了</p>
+    </div>
+</body>
+
+</html>
