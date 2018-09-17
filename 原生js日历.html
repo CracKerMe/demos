@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Apple Sun calendar</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        td {
+            width: 32px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+        }
+        
+        th h1 {
+            font-size: 16px;
+        }
+        
+        .cld-cur {
+            background: #3671a5 !important;
+            color: #FFF;
+            font-weight: bold;
+        }
+        
+        .cld-old {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+</body>
+<script>
+    (function(window, document) {
+        function Calendar() {
+            if (typeof Calendar.instance === 'object') {
+                return Calendar.instance;
+            }
+            this.instance = this;
+        }
+        Calendar.prototype = {
+            init: function() {
+                var calendar = document.createElement('div');
+                calendar.setAttribute('id', 'showCld');
+                document.getElementById("box").appendChild(calendar);
+                var today = new Date();
+                var _year = today.getFullYear(),
+                    _month = today.getMonth() + 1,
+                    _day = today.getDate();
+                this.render(_year, _month, _day);
+                calendar.onclick = function(e) {
+                    var e = e || window.event;
+                    var target = e.srcElement || e.target;
+                    var dayArr = document.getElementById('showDate').getAttribute('value').split('-');
+                    if (target) {
+                        if (target.className === 'cld-day' || target.className === 'cld-cur') {
+                            dayArr = target.getAttribute('value').split('-');
+                            spCalendar.showDate(dayArr[0] - 0, dayArr[1] - 0, dayArr[2] - 0);
+                            calendar.className = '';
+                        } else if (target.className === "cld-pre") {
+                            spCalendar.preMonth(dayArr[0] - 0, dayArr[1] - 0, dayArr[2] - 0);
+                        }
+                        //如果是下一月的点击
+                        else if (target.className === "cld-next") {
+                            spCalendar.nextMonth(dayArr[0] - 0, dayArr[1] - 0, dayArr[2] - 0);
+                        }
+                    }
+                }
+            },
+            isLeapYear: function(_year) {
+                // 是否是闰年
+                if (_year % 400 === 0 || (_year % 4 === 0 && _year % 100 !== 0)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            getMonthDays: function(_year, _month) {
+                // 通过月份获取当月多少天
+                var monthDay = 0;
+                switch (_month) {
+                    case 1:
+                        monthDay = 31;
+                        break;
+                    case 2:
+                        if (this.isLeapYear(_year)) {
+                            monthDay = 29;
+                        } else {
+                            monthDay = 28;
+                        }
+                        break;
+                    case 3:
+                        monthDay = 31;
+                        break;
+                    case 4:
+                        monthDay = 30;
+                        break;
+                    case 5:
+                        monthDay = 31;
+                        break;
+                    case 6:
+                        monthDay = 30;
+                        break;
+                    case 7:
+                        monthDay = 31;
+                        break;
+                    case 8:
+                        monthDay = 31;
+                        break;
+                    case 9:
+                        monthDay = 30;
+                        break;
+                    case 10:
+                        monthDay = 31;
+                        break;
+                    case 11:
+                        monthDay = 30;
+                        break;
+                    case 12:
+                        monthDay = 31;
+                        break;
+                }
+                return monthDay
+            },
+            getFirstDay: function(_year, _month) {
+                // 获取某年某月1号是星期几
+                // 返回1~7，对应周一到周末
+                var allDay = 0,
+                    y = _year - 1,
+                    i = 0;
+                allDay = y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) + 1;
+                for (; i < _month; i++) {
+                    switch (i) {
+                        case 1:
+                            allDay += 31;
+                            break;
+                        case 2:
+                            if (this.isLeapYear(_year)) {
+                                allDay += 29;
+                            } else {
+                                allDay += 28;
+                            }
+                            break;
+                        case 3:
+                            allDay += 31;
+                            break;
+                        case 4:
+                            allDay += 30;
+                            break;
+                        case 5:
+                            allDay += 31;
+                            break;
+                        case 6:
+                            allDay += 30;
+                            break;
+                        case 7:
+                            allDay += 31;
+                            break;
+                        case 8:
+                            allDay += 31;
+                            break;
+                        case 9:
+                            allDay += 30;
+                            break;
+                        case 10:
+                            allDay += 31;
+                            break;
+                        case 11:
+                            allDay += 30;
+                            break;
+                        case 12:
+                            allDay += 31;
+                            break;
+                    }
+                }
+                return (allDay % 7 - 1)
+            },
+            render: function(_year, _month, _day) {
+                var i = 0,
+                    monthDay = this.getMonthDays(_year, _month),
+                    domStr = '',
+                    _className = '',
+                    firstDay = this.getFirstDay(_year, _month)
+                today = new Date();
+                // 输入日历表格
+                domStr = '<table class ="cld-w"><thead>';
+                // 日历头部
+                domStr += '<tr><th><span class="cld-pre">&lt;</span></th><th colspan="5"><h1 id="showDate" value="' + _year + '-' + _month + '-' + _day + '">' + _year + '年' + _month + '月' + _day + '日</h1></th><th><span class="cld-next">&gt;</span></th></tr>';
+                // 日历星期
+                domStr += '<tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr><tbody>';
+                for (var j = 1; j <= firstDay; j++) {
+                    domStr += '<td></td>';
+                }
+                for (i = 1; i <= monthDay; i++) {
+                    if (_year === today.getFullYear() && _month === today.getMonth() + 1 && i === today.getDate()) {
+                        _className = 'cld-cur';
+                    } else if (_year < today.getFullYear() || (_year === today.getFullYear() && _month < today.getMonth() + 1) || (_year === today.getFullYear() && _month === today.getMonth() + 1 && i < today.getDate())) {
+                        _className = 'cld-old';
+                    } else {
+                        _className = 'cld-day';
+                    }
+                    if (_day === i && (_year > today.getFullYear() || _month > today.getMonth() + 1)) {
+                        _className = 'cld-cur';
+                    }
+                    domStr += '<td class=' + _className + ' value="' + _year + '-' + _month + '-' + i + '">' + i + '</td>';
+                    firstDay = (firstDay + 1) % 7;
+                    if (firstDay === 0 && i !== monthDay) {
+                        domStr += '</tr><tr>';
+                    }
+                }
+
+                // 剩余的空格
+                if (firstDay !== 0) {
+                    for (i = firstDay; i < 7; i++) {
+                        domStr += '<td></td>';
+                    }
+                }
+                domStr += '</tr></tbody></table>';
+                document.getElementById('showCld').innerHTML = domStr;
+
+            },
+            showDate: function(_year, _month, _day) {
+                var date = "";
+                if (_day !== 0) {
+                    date = _year + "年" + _month + "月" + _day + "日";
+                } else {
+                    date = "No Choose.";
+                }
+                document.getElementById("showCld").innerHTML = date; //日历头部显示
+                this.render(_year, _month, _day); //调用日历显示函数
+            },
+            preMonth: function(_year, _month, _day) {
+                if (_month == 1) {
+                    this.showDate(_year - 1, 12, _day);
+                } else {
+                    this.showDate(_year, _month - 1, _day);
+                }
+            },
+            nextMonth: function(_year, _month, _day) {
+                if (_month == 12) {
+                    this.showDate(_year + 1, 1, _day);
+                } else {
+                    this.showDate(_year, _month + 1, _day);
+                }
+            }
+        }
+        var spCalendar = new Calendar();
+        spCalendar.init();
+    })(window, document)
+</script>
+
+</html>
