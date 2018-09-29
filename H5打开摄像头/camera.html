@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>调用相机</title>
+</head>
+
+<body>
+    <video id="video" autoplay style="width:640px;height:480px"></video>
+    <div><button id="capture">拍照</button></div>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <script>
+        function getUserMedia(constraints, success, error) {
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+            } else if (navigator.webkitGetUserMedia) {
+                navigator.webkitGetUserMedia(constraints, success, error);
+            } else if (navigator.mozkitGetUserMedia) {
+                navigator.mozkitGetUserMedia(constraints, success, error);
+            } else if (navigator.getUserMedia) {
+                navigator.getUserMedia(constraints, success, error);
+            }
+        }
+        var video = document.getElementById('video');
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+
+        function success(stream) {
+            var CompatibleURL = window.URL || window.webkitURL;
+            // video.src = CompatibleURL.createObjectURL(stream[0]);
+            video.srcObject = stream
+            video.play();
+        }
+
+        function error(error) {
+            alert('访问用户媒体设备失败: ')
+            alert(error);
+        }
+
+        // if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozkitGetUserMedia) {
+        //     getUserMedia({
+        //         audio: true,
+        //         video: {
+        //             facingMode: "user"
+        //         }
+        //     }, success, error);
+        // } else {
+        //     alert('您的浏览器不支持');
+        // }
+        var video = document.getElementById('video');
+        video.style.width = document.width + 'px';
+        video.style.height = document.height + 'px';
+        video.setAttribute('autoplay', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+
+        var constraints = {
+            audio: false,
+            video: {
+                facingMode: 'user'
+            }
+        }
+
+        navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+            video.srcObject = stream;
+        });
+
+
+        document.getElementById('capture').onclick = function() {
+            context.drawImage(video, 0, 0, 640, 480);
+        }
+    </script>
+</body>
+
+</html>
