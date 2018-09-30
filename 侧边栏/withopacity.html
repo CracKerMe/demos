@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>侧边栏</title>
+  <style>
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidenav span {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+      color: #fff;
+      cursor: pointer;
+    }
+    input {
+      width: 142px;
+      height: 46px;
+      font-size: 18px;
+      color: #FFF;
+      border: 0;
+      background: #00b38a;
+      cursor: pointer;
+      outline: none;
+    }
+    .main {
+      transition: margin-left .5s;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidenav">
+    <span id="closeNav">&times;</span>
+    <a href="javascript:void(0)">HomePage</a>
+    <a href="javascript:void(0)">AboutMe</a>
+    <a href="javascript:void(0)">Articles</a>
+    <a href="javascript:void(0)">Categorys</a>
+    <a href="javascript:void(0)">FriendLinks</a>
+  </div>
+  <div class="main">
+    <h1>more Sidenav Push Example：</h1>
+    <div>
+      <a href="/">Sidenav overlay</a>
+      <a href="./offcanvas.html">Sidenav push(off-canvas)</a>
+      <a href="./withopacity.html">Sidenav push(w/opacity)</a>
+      <a href="/">Sidenav full-width</a>
+    </div>
+    <h2>Click on the element below to open the side navigation menu, and push this content to the right.</h2>
+    <p>Best Practices on Effectively Integrating SMS within your GOTV Strategy
+      Hear from Stefan Smith, Digital Director at Democratic Party of New Mexico, about best practices for integrating
+      SMS
+      within campaigns on Tuesday, September 18 at 1 PM CT | 2 PM ET!</p>
+    <input type="button" value="open">
+  </div>
+</body>
+<script>
+  var openBtn = document.getElementsByTagName('input')[0];
+  var closeBtn = document.getElementById('closeNav');
+  openBtn.onclick = function () {
+    document.getElementsByClassName("sidenav")[0].style.width = "250px";
+    document.getElementsByClassName("main")[0].style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+  }
+  closeBtn.onclick = function () {
+    document.getElementsByClassName("sidenav")[0].style.width = "0";
+    document.getElementsByClassName("main")[0].style.marginLeft = "0";
+    document.body.style.backgroundColor = "#fff";
+  }
+</script>
+
+</html>

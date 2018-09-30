@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h1>用力摇一摇</h1>
+	<p>Shake Your Phone</p>
+	<script>
+		var SHAKE_THRESHOLD = 300;
+		var lastTime = 0;
+		var x = y = z = lastX = lastY = lastZ = 0;
+
+		function motionHandler(evt) {
+			var acceleration = evt.accelerationIncludingGravity;
+			var currentTime = Date.now();
+			if((currentTime - lastTime) > 120) {
+				var diffTime = currentTime - lastTime;
+				lastTime = currentTime;
+				x = acceleration.x;
+				y = acceleration.y;
+				z = acceleration.z;
+				var speed = Math.abs(x+y+z - lastX - lastY - lastZ) / diffTime * 1000;
+				if(speed > SHAKE_THRESHOLD) {
+					alert('You Shake It')
+				}
+				lastX = x;
+				lastY = y;
+				lastZ = z;
+			}
+		}
+		if(window.DeviceMotionEvent) {
+			window.addEventListener('devicemotion', motionHandler, false);
+		} else {
+			alert('您的设备不支持感应')
+		}
+	</script>
+</body>
+</html>
