@@ -3,11 +3,25 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<script src="../vconsole.min.js"></script>
 </head>
 <body>
 	<h1>用力摇一摇</h1>
 	<p>Shake Your Phone</p>
 	<script>
+	// 初始化vConsole
+	window.vConsole = new window.VConsole({
+		defaultPlugins: ['system', 'network', 'element', 'storage'], // 可以在此设定要默认加载的面板
+		maxLogNumber: 1000,
+		// disableLogScrolling: true,
+		onReady: function() {
+			console.log('vConsole is ready.');
+		},
+		onClearLog: function() {
+			console.log('on clearLog');
+		}
+	});
+
 		var SHAKE_THRESHOLD = 300;
 		var lastTime = 0;
 		var x = y = z = lastX = lastY = lastZ = 0;
@@ -23,7 +37,7 @@
 				z = acceleration.z;
 				var speed = Math.abs(x+y+z - lastX - lastY - lastZ) / diffTime * 1000;
 				if(speed > SHAKE_THRESHOLD) {
-					alert('You Shake It')
+					console.log('You Shake It')
 				}
 				lastX = x;
 				lastY = y;
