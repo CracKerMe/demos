@@ -4,48 +4,12 @@
 H5打开摄像头： 请在https下打开(设备需要有摄像头)
 
 
+## 自己整理的 API：
+### 1. 获取历史上的今天 ``09`` 可修改为其它月份 
+https://baike.baidu.com/cms/home/eventsOnHistory/09.json
 
-    this.$axios
-      .get(
-        "https://cors-anywhere.herokuapp.com/https://www.toutiao.com/a6634459265446707720/"
-      )
-      .then(res => {
-        let response = res.data.replace(/ *[\r|\n] */gm, "");
-        let str = "";
-        const scriptReg = /<script>.*?<\/script>/g;
-        response.match(scriptReg, "").forEach((item, index) => {
-          if (index == 4) {
-            str = item;
-          }
-        });
-        str = this.html_decode(this.delHtmlTag(str));
-        console.log(str);
+### 2. 获取今日头条支持的所有城市
+https://www.toutiao.com/stream/widget/local_weather/city/
 
-        eval(str);
-        // console.log(BASE_DATA);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  },
-  methods: {
-    getRandom(arr) {
-      return Math.floor(Math.random() * arr.length);
-    },
-    html_decode(str) {
-      var s = "";
-      if (str.length == 0) return "";
-      s = str.replace(/&amp;/g, "&");
-      s = s.replace(/&lt;/g, "<");
-      s = s.replace(/&gt;/g, ">");
-      s = s.replace(/&nbsp;/g, " ");
-      s = s.replace(/&#39;/g, "'");
-      s = s.replace(/&quot;/g, '"');
-      s = s.replace(/<br\/>/g, "\n");
-      s = s.replace(/&#x3D;/g, "=");
-      s = s.replace(".replace(//ig, '')", "");
-      return s;
-    },
-    delHtmlTag(str) {
-      return str.replace(/<[^>]+>/g, ""); //去掉所有的html标记
-    }
+### 3.根据地区获取天气情况 ``高邮``仅可替换为接口2出现的城市
+https://www.toutiao.com/stream/widget/local_weather/data/?city=高邮
