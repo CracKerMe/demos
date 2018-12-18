@@ -16,6 +16,8 @@ https://www.toutiao.com/stream/widget/local_weather/data/?city=高邮
 
 
 
+## 一些免费api的集合
+https://github.com/xCss/JsonBird/wiki
 
 
 ## 强烈推荐的 这个的GitHub仓库，API收集得很全
