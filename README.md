@@ -20,7 +20,12 @@ https://www.toutiao.com/stream/widget/local_weather/data/?city=高邮
 https://github.com/xCss/JsonBird/wiki
 
 
-## 强烈推荐的 这个的GitHub仓库，API收集得很全
-https://github.com/jokermonn/-Api
+## ~~强烈推荐的 这个的GitHub仓库，API收集得很全~~
+~~https://github.com/jokermonn/-Api~~
 
 ~~壁纸的一个网站 还在研究中http://lab.mkblog.cn/wallpaper/~~
+
+
+
+知乎 API v4 整理 https://juejin.im/entry/5c6d620e518825621f2a6e85  /   https://zhuanlan.zhihu.com/p/87029765
+
