@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CANVAS画板</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f0f0f0;
+      text-align: center;
+      height: 100vh;
+    }
+
+    canvas {
+      background: #ffffff;
+      margin: 0 auto;
+      display: inline-block;
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+
+    button {
+      position: fixed;
+      right: 10px;
+      top: 10px;
+      height: 26px;
+      padding: 0 12px;
+      display: block;
+      background: aqua;
+      font-size: 20px;
+      border: 0;
+      outline: none;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="800" height="600">您的浏览器版本过低，请升级您的浏览器</canvas>
+  <button class="clear-btn">清空画布</button>
+  <script>
+    var canvas = document.getElementById('canvas')
+    var context = canvas.getContext('2d')
+    var CLIENT_WIDTH = document.documentElement.clientWidth;
+    var CLIENT_Height = document.documentElement.clientHeight;
+    var useTouch = 'ontouchstart' in window ? true : false
+    canvas.setAttribute('width', CLIENT_WIDTH);
+    canvas.setAttribute('height', CLIENT_Height);
+    canvas[useTouch ? 'ontouchstart' : 'onmousedown'] = function (e) {
+      context.beginPath()
+      var ev = ev || window.event
+      var disX = useTouch ? ev.touches[0]['clientX'] : ev.clientX - canvas.offsetLeft;
+      var disY = useTouch ? ev.touches[0]['clientY'] : ev.clientY - canvas.offsetTop;
+      document[useTouch ? 'ontouchmove' : 'onmousemove'] = function (e) {
+        var ev = ev || window.event
+        var dX = useTouch ? ev.touches[0]['clientX'] : ev.clientX - canvas.offsetLeft;
+        var dY = useTouch ? ev.touches[0]['clientY'] : ev.clientY - canvas.offsetTop;
+        var gradient = context.createLinearGradient(0, 0, CLIENT_WIDTH, CLIENT_Height)
+        gradient.addColorStop(0, 'red')
+        gradient.addColorStop(0.2, 'orange')
+        gradient.addColorStop(0.4, 'yellow')
+        gradient.addColorStop(0.6, 'green')
+        gradient.addColorStop(0.8, 'blue')
+        gradient.addColorStop(1, 'indigo')
+        context.strokeStyle = gradient;
+        // context.strokeStyle='red'
+        context.lineWidth = 5
+        context.lineTo(dX, dY)
+        context.stroke()
+      }
+      document[useTouch ? 'ontouchend' : 'onmouseup'] = function () {
+        document[useTouch ? 'ontouchmove' : 'onmousemove'] = null
+      }
+    }
+    document.querySelector('.clear-btn').addEventListener('click', function () {
+      context.clearRect(0, 0, CLIENT_WIDTH, CLIENT_Height)
+    }, false)
+    document.documentElement.addEventListener('resize', function () {
+      CLIENT_WIDTH = document.documentElement.clientWidth;
+      CLIENT_Height = document.documentElement.clientHeight;
+      canvas.setAttribute('width', CLIENT_WIDTH);
+      canvas.setAttribute('height', CLIENT_Height);
+    }, false)
+  </script>
+</body>
+
+</html>
